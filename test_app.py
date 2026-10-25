@@ -4,7 +4,7 @@ from unittest.mock import patch
 from streamlit.testing.v1 import AppTest
 from iptracker.core import LookupError
 
-APP = str(Path(__file__).resolve().parents[1] / 'app.py')
+APP = str(Path(__file__).resolve().parents[0] / 'app.py')
 DEVICE = {'captured_at': '2026-10-23T00:00:00Z', 'hostname': 'Test Mac', 'system': 'Darwin',
           'interfaces': [{'name': 'en0', 'status': 'Up', 'mtu': 1500, 'mac': ['aa:bb:cc:dd:ee:ff'],
                           'ipv4': [{'address': '192.168.1.5', 'netmask': '255.255.255.0', 'scope': 'Private / special-use'}],

@@ -4,8 +4,8 @@
 
 ## Mac
 
-1. Extract `IP-Tracker-Ready-to-Use.zip`.
-2. Open the extracted **IP-Tracker** folder.
+1. Clone the repository.
+2. Open the **ip-tracker** folder.
 3. Double-click **Start-IP-Tracker.command**.
 4. Wait for first-run setup, then open **http://127.0.0.1:8502**.
 
@@ -25,12 +25,11 @@ from https://www.python.org/downloads/ and reopen Terminal.
 
 ## Windows
 
-Install Python 3.11 or newer with **Add Python to PATH** enabled. Extract the ZIP
-and double-click **Start-IP-Tracker.bat**.
+Install Python 3.11 or newer with **Add Python to PATH** enabled, then double-click **Start-IP-Tracker.bat**.
 
 ## Linux
 
-Open Terminal in the extracted folder and run `sh start-ip-tracker.sh`.
+Open Terminal in the project folder and run `sh start-ip-tracker.sh`.
 Your distribution may require its `python3-venv` package.
 
 ## After launch
@@ -41,7 +40,7 @@ Your distribution may require its `python3-venv` package.
 - **3D map:** appears after a lookup returns coordinates. Drag to move, scroll to zoom, or Ctrl + drag to rotate/tilt. Use **Globe view**, **Recenter**, or **2D / 3D**. Google Maps and satellite links open separately. The marker is approximate, not GPS.
 - **Lookup history:** export results to CSV.
 
-The package requires Python 3.11+ and Internet on first launch to install dependencies.
+The app requires Python 3.11+ and Internet on first launch to install dependencies.
 Local device addresses work offline after setup. Public detection and geolocation need Internet.
 
 Keep the Terminal window open while using the app. Press **Ctrl+C** to stop it.

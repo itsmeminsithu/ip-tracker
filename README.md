@@ -18,11 +18,11 @@ View your device's IPv4, IPv6 and MAC addresses, detect public IPs, and look up 
 - Copyable address blocks, JSON downloads and CSV lookup-history export
 - Last 100 successful lookups in session memory
 - Mac, Windows and Linux launchers with first-run dependency installation
-- Tests and a GitHub Actions test matrix
+- Automated tests (pytest)
 
 ## Quick start
 
-Install **Python 3.11 or newer**, extract the ZIP, and open its `IP-Tracker` folder.
+Requires Python 3.11 or newer. Clone the repository, then start it with the launcher for your system:
 
 | System | Start |
 | --- | --- |
@@ -34,8 +34,16 @@ The launcher creates `.venv` and installs requirements on the first run.
 Internet is required for setup. Open **http://127.0.0.1:8502** if your browser does not open.
 Keep the terminal open. Press **Ctrl+C** to stop the app.
 
-This package includes all application source and automatic setup; Python itself is not bundled.
 See [QUICKSTART.md](QUICKSTART.md) for troubleshooting.
+
+## Live preview (GitHub Codespaces)
+
+This is a Streamlit app, so it cannot run on GitHub Pages. Preview it in Codespaces instead:
+
+1. On GitHub, click **Code → Codespaces → Create codespace on main** (after this change is merged).
+2. The devcontainer installs `requirements.txt` automatically and forwards port **8502**.
+3. In the Codespaces terminal, run `python -m streamlit run app.py --server.port=8502 --server.address=0.0.0.0 --server.headless=true`.
+4. Open the forwarded port **8502** from the Ports panel.
 
 ## Manual installation
 
@@ -113,23 +121,6 @@ python -m pytest -q
 
 Tests mock OS data and external services where appropriate. They cover address classification, IPv6, MAC display, provider failures, export escaping and dashboard interactions.
 
-## GitHub repository
-
-Suggested repository name: **`ip-tracker`**
-
-Description:
-> A Python dashboard for local IPv4, IPv6 and MAC addresses, public IP detection, and IP geolocation lookup. Built with Streamlit by Min SiThu (devminsithu).
-
-Create an empty GitHub repository under `devminsithu`, then run inside this folder:
-
-```bash
-git init -b main
-git add .
-git commit -m "Build IP Tracker"
-git remote add origin https://github.com/devminsithu/ip-tracker.git
-git push -u origin main
-```
-
 ## Source structure
 
 - `app.py`: dashboard and session state
@@ -137,11 +128,9 @@ git push -u origin main
 - `iptracker/maps.py` and `iptracker/globe.html`: coordinate validation and Cesium globe
 - `iptracker/export.py`: CSV and JSON exports
 - `launch.py`: environment setup and app startup
-- `tests/`: automated tests
-- `.streamlit/config.toml`: theme, localhost binding and port 8502
-- `.github/workflows/tests.yml`: automated test matrix
+- `test_*.py`: automated tests
+- `.devcontainer/devcontainer.json`: Codespaces preview (port 8502)
 
-Application code was written for this project using standard Python and third-party library APIs.
 
 ## Author and license
 
