@@ -4,25 +4,25 @@ A local IP address dashboard by **Min SiThu (devminsithu)**.
 
 [Website](https://minsithu.org/) · [Contact](https://minsithu.org/contact/) · [MIT License](LICENSE)
 
-View your device's IPv4, IPv6 and MAC addresses, detect public IPs, and look up IP location and network information.
+It shows the IPv4, IPv6 and MAC addresses of the machine it runs on, detects your public IPs, and looks up location and network details for an address you enter.
 
-## Features
+## What it shows
 
-- Local IPv4 and IPv6 addresses grouped by network adapter
+- Local IPv4 and IPv6 addresses, grouped by network adapter
 - Current MAC address, connection status, MTU and subnet masks
-- Separate public IPv4 and IPv6 detection
-- Public IP lookup: approximate country, region, city, ISP, organization, ASN and timezone
+- Public IPv4 and IPv6 detection, done separately
+- For a public IP lookup: approximate country, region, city, ISP, organization, ASN and timezone
 - Local classification of private, loopback, link-local, multicast and special-use addresses
-- Interactive 3D globe with zoom, rotate, recenter and 2D/3D controls
-- Google Maps and satellite-view links for returned coordinates
-- Copyable address blocks, JSON downloads and CSV lookup-history export
-- Last 100 successful lookups in session memory
-- Mac, Windows and Linux launchers with first-run dependency installation
-- Automated tests (pytest)
+- A 3D globe you can zoom, rotate and recenter, with 2D/3D controls
+- Google Maps and satellite-view links for the returned coordinates
+- Copyable address blocks, JSON downloads, CSV export of lookup history
+- The last 100 lookups that succeeded, kept in session memory
+- Launchers for Mac, Windows and Linux that install dependencies on first run
+- Tests (pytest)
 
 ## Quick start
 
-Requires Python 3.11 or newer. Clone the repository, then start it with the launcher for your system:
+You need Python 3.11 or newer. Clone the repo, then use the launcher for your system:
 
 | System | Start |
 | --- | --- |
@@ -30,22 +30,20 @@ Requires Python 3.11 or newer. Clone the repository, then start it with the laun
 | Windows | Double-click `Start-IP-Tracker.bat` |
 | Linux | Run `sh start-ip-tracker.sh` |
 
-The launcher creates `.venv` and installs requirements on the first run.
-Internet is required for setup. Open **http://127.0.0.1:8502** if your browser does not open.
-Keep the terminal open. Press **Ctrl+C** to stop the app.
+First run creates `.venv` and installs requirements, so you need internet for setup. If the browser does not open, go to **http://127.0.0.1:8502**. Leave the terminal open; **Ctrl+C** stops it.
 
-See [QUICKSTART.md](QUICKSTART.md) for troubleshooting.
+Troubleshooting is in [QUICKSTART.md](QUICKSTART.md).
 
-## Live preview (GitHub Codespaces)
+## Trying it in Codespaces
 
-This is a Streamlit app, so it cannot run on GitHub Pages. Preview it in Codespaces instead:
+This is a Streamlit app, so it cannot run on GitHub Pages. Codespaces works:
 
 1. On GitHub, click **Code → Codespaces → Create codespace on main** (after this change is merged).
-2. The devcontainer installs `requirements.txt` automatically and forwards port **8502**.
-3. In the Codespaces terminal, run `python -m streamlit run app.py --server.port=8502 --server.address=0.0.0.0 --server.headless=true`.
-4. Open the forwarded port **8502** from the Ports panel.
+2. The devcontainer installs `requirements.txt` and forwards port **8502**.
+3. In the Codespaces terminal: `python -m streamlit run app.py --server.port=8502 --server.address=0.0.0.0 --server.headless=true`.
+4. Open forwarded port **8502** in the Ports panel.
 
-## Manual installation
+## Manual install
 
 macOS/Linux:
 
@@ -65,49 +63,44 @@ python -m pip install -r requirements.txt
 python -m streamlit run app.py --server.port=8502
 ```
 
-## Usage
+## Using it
 
-1. **My device** lists the computer's network adapters. Select your Wi-Fi, Ethernet or VPN adapter to see its addresses. Use **Refresh device** after a network change.
-2. **Detect public IPs** contacts ipify to find the internet-facing IPv4 and IPv6 addresses. A VPN/proxy can change these results. An IPv6 failure is displayed independently of IPv4.
-3. **IP lookup** accepts a single IPv4 or IPv6 address. Public addresses are sent to ipwho.is. Other address types are classified locally without a geolocation request.
-4. When coordinates are available, the **Location explorer** shows an approximate marker on a 3D globe. Drag/scroll to explore or use the Google Maps buttons. The embedded globe uses OpenStreetMap streets on an ellipsoid, not Google Earth imagery, terrain elevation or 3D buildings.
-5. **Lookup history** shows the last 100 completed lookups. Export to CSV or clear the history.
+1. **My device** lists the machine's adapters. Pick your Wi-Fi, Ethernet or VPN adapter to see its addresses. Use **Refresh device** after a network change.
+2. **Detect public IPs** asks ipify for the internet-facing IPv4 and IPv6 addresses. A VPN or proxy changes what comes back. An IPv6 failure shows on its own; it does not take the IPv4 result down with it.
+3. **IP lookup** takes one IPv4 or IPv6 address. Public addresses go to ipwho.is. Other types are classified locally, with no geolocation request.
+4. When there are coordinates, **Location explorer** puts an approximate marker on the 3D globe. Drag and scroll, or use the Google Maps buttons. The globe is OpenStreetMap streets on an ellipsoid — not Google Earth imagery, not terrain elevation, not 3D buildings.
+5. **Lookup history** holds the last 100 completed lookups. Export to CSV or clear it.
 
-The first adapter is a convenience selection, not a verified default route.
-Select the correct adapter for your connection. Virtual adapters and VPNs are included.
-A device may have several IPv6 addresses. Link-local IPv6 addresses can include a zone ID
-such as `%en0` in the device panel; the lookup input expects an IP literal without a zone ID.
+Two things that trip people up: the first adapter in the list is just a convenience pick, not a checked default route, so select the adapter you are actually using. And a device can have several IPv6 addresses. Link-local IPv6 addresses in the device panel may carry a zone ID like `%en0`; the lookup box wants an IP literal without one. Virtual adapters and VPNs are included in the list.
 
-## What the results mean
+## Reading the results
 
-- **Local IP:** assigned to a network adapter on the computer running this Python app.
-- **Public IP:** the address observed by an external service. It may belong to a router, VPN or proxy.
-- **MAC:** the current link-layer address reported by the operating system. It may be randomized or virtual, and may be unavailable for some adapters. It is not necessarily the factory hardware address.
-- **IP location:** an estimate for the network, not GPS, a person's identity or an exact street address.
-- **Remote MAC:** cannot be obtained from an arbitrary public IP lookup. This app displays only local adapter MAC addresses.
-- **No IPv6 detected:** the request failed or no usable result was returned. This alone does not prove IPv6 is disabled.
+- **Local IP:** an address on an adapter of the computer running this Python app.
+- **Public IP:** the address an external service sees. It may belong to a router, VPN or proxy.
+- **MAC:** the link-layer address the OS reports right now. It may be randomized or virtual, and some adapters do not report one. It is not necessarily the factory hardware address.
+- **IP location:** an estimate for the network. Not GPS, not a person's identity, not an exact street address.
+- **Remote MAC:** you cannot get one from a public IP lookup. This app only shows local adapter MAC addresses.
+- **No IPv6 detected:** the request failed, or nothing usable came back. On its own that does not prove IPv6 is disabled.
 
-Classification uses Python's `ipaddress` module. Some special-use classifications can vary between Python versions.
+Classification uses Python's `ipaddress` module. Some special-use classifications differ between Python versions.
 
-## Privacy and services
+## Privacy, and what leaves your machine
 
-The default server listens only on `127.0.0.1`. Device addresses describe the **host running the app**, not an arbitrary browser visitor. Do not deploy it as a public website for collecting visitor MAC addresses; browsers do not provide those addresses.
+By default the server listens only on `127.0.0.1`. The device panel describes the **host running the app**, not whoever opens the page. Do not put this up as a public site to collect visitor MAC addresses; browsers do not hand those out anyway.
 
-The embedded map needs Internet and WebGL support. If it cannot load, the app keeps the lookup results and offers Google Maps links. No API key is needed for the included globe. OpenStreetMap tiles are for normal interactive viewing; do not bulk-download or prefetch them. For larger deployments use a tile provider appropriate to your traffic.
+The device panel works offline once setup is done. It reads OS interface metadata with psutil and does not scan the LAN. Nothing is looked up just by opening the app: public-IP detection and geolocation only run when you press the button.
 
-The local device panel works offline after setup. It reads OS interface metadata with psutil and performs no LAN scan. Public-IP detection and geolocation are button-triggered; simply opening the app sends no application-level lookup requests.
-
-- **ipify:** receives public IP detection requests at `api.ipify.org` and `api6.ipify.org`.
-- **3D map:** your browser loads CesiumJS from cesium.com and visible map tiles from OpenStreetMap. Map tile requests reveal the area being viewed and the browser connection IP, but do not include the searched IP or local MAC addresses. Google links open the returned coordinates on Google Maps when clicked.
-- **ipwho.is:** receives the public address entered for a lookup and the requesting connection's public IP.
+- **ipify:** gets public IP detection requests at `api.ipify.org` and `api6.ipify.org`.
+- **ipwho.is:** gets the public address you enter for a lookup, plus your connection's public IP.
+- **3D map:** your browser loads CesiumJS from cesium.com and visible map tiles from OpenStreetMap. Tile requests show the area being viewed and the browser's connection IP. They do not include the searched IP or local MAC addresses. Google links open the returned coordinates on Google Maps when you click them. The map needs internet and WebGL; if it fails to load, the lookup results stay and the Google Maps links still work. No API key is needed for the included globe. OpenStreetMap tiles are for normal interactive viewing — do not bulk-download or prefetch them. For heavier use, get a tile provider that fits your traffic.
 - Local MAC addresses and the full device snapshot are never sent to either provider.
-- No database, account, API key or custom analytics is required. Streamlit usage telemetry is disabled.
-- Lookups and device snapshots are held in session memory. Closing/reconnecting or restarting may clear them.
-- Exports may contain device addresses; review them before sharing. Git ignores default export filenames.
+- No database, account, API key or analytics of my own. Streamlit usage telemetry is disabled.
+- Lookups and device snapshots live in session memory. Closing, reconnecting or restarting can clear them.
+- Exports can contain device addresses. Read them before you share them. Git ignores the default export filenames.
 
-Providers have their own terms, rate limits and availability. The app handles timeouts, rate limits, invalid responses and unavailable IPv6 without inventing results.
+Providers have their own terms, rate limits and availability. Timeouts, rate limits, bad responses and missing IPv6 are handled without making up a result.
 
-Provider documentation:
+Provider docs:
 - https://www.ipify.org/
 - https://ipwhois.io/documentation
 - https://psutil.readthedocs.io/
@@ -119,18 +112,17 @@ python -m pip install -r requirements-dev.txt
 python -m pytest -q
 ```
 
-Tests mock OS data and external services where appropriate. They cover address classification, IPv6, MAC display, provider failures, export escaping and dashboard interactions.
+Tests mock OS data and external services where that makes sense. They cover address classification, IPv6, MAC display, provider failures, export escaping and dashboard interactions.
 
-## Source structure
+## Files
 
 - `app.py`: dashboard and session state
-- `iptracker/core.py`: local interfaces, IP validation and external providers
-- `iptracker/maps.py` and `iptracker/globe.html`: coordinate validation and Cesium globe
+- `iptracker/core.py`: local interfaces, IP validation, external providers
+- `iptracker/maps.py` and `iptracker/globe.html`: coordinate validation and the Cesium globe
 - `iptracker/export.py`: CSV and JSON exports
 - `launch.py`: environment setup and app startup
-- `test_*.py`: automated tests
+- `test_*.py`: tests
 - `.devcontainer/devcontainer.json`: Codespaces preview (port 8502)
-
 
 ## Author and license
 
@@ -138,13 +130,9 @@ Copyright © 2026 **Min SiThu (devminsithu)**.
 
 [minsithu.org](https://minsithu.org/) · [Contact](https://minsithu.org/contact/)
 
-Project source is licensed under the [MIT License](LICENSE). Dependencies retain their own licenses.
+Source is under the [MIT License](LICENSE). Dependencies keep their own licenses.
 
-## Map libraries and attribution
-
-CesiumJS 1.146 loads from the official CDN and retains its Apache-2.0 license.
-Map data © OpenStreetMap contributors; attribution remains visible in the viewer.
-Google Maps is an external service, not bundled application code.
+Map libraries: CesiumJS 1.146 loads from the official CDN and keeps its Apache-2.0 license. Map data © OpenStreetMap contributors; attribution stays visible in the viewer. Google Maps is an external service, not bundled code.
 
 - https://cesium.com/learn/cesiumjs/
 - https://www.openstreetmap.org/copyright
